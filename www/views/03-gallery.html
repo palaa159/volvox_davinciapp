@@ -1,13 +1,14 @@
 <ion-view>
-	<ion-content class="padding">
+	<ion-content class="padding" scroll="false">
 		<!-- Slick -->
-		<slick lazy-load="ondemand" slides-to-show="3" slides-to-scroll="1">
-			<div ng-repeat="item in gallery">
-				<img ng-src="{{item}}">
+		<div class="slick">
+			<div class="slick-item" ng-repeat="item in gallery">
+				<a class="image-lightbox" ng-href="{{item}}">
+					<img class="slick-item-img" ng-src="{{item}}">
+				</a>
 			</div>
-		</slick>
+		</div>
 		<!-- End of Slick -->
-		<button class="button">Share This</button>
-		<button class="button">Go Back</button>
+
 	</ion-content>
 </ion-view>

@@ -32,13 +32,27 @@ angular.module('app.services', [])
         }).then(function(result) {
             // return links via Dropbox media api
             $rootScope.gallery = [];
-            result.data.contents.forEach(function(content) {
-                // console.log(content);
+            // TODO: Async
+            var i = 0;
+            async.each(result.data.contents, function(content, callback) {
+                function callback() {
+                    // console.log(result.data.contents.length, i);
+                    if (i === result.data.contents.length - 1) {
+                        // console.log('Done');
+                        if (cb) cb();
+                    } else {
+                        i++;
+                    }
+                }
                 service.returnDirectLink(content.path, function(result) {
                     $rootScope.gallery.push(result);
+                    callback();
                 });
+            }, function(err) {
+                if (err) {
+                    console.log(err);
+                }
             });
-            if(cb) cb();
         });
     };
 

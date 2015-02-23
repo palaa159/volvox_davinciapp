@@ -1,1 +1,13 @@
 /* Empty. Add your own CSS if you like */
+
+/*Slick*/
+.slick-item {
+	width: 200px;
+	height: 200px;
+	padding: 10px;
+}
+
+.slick-item-img {
+	width: 100%;
+	height: 100%;
+}

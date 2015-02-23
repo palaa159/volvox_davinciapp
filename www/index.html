@@ -17,7 +17,9 @@
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/slick-carousel/slick/slick.js"></script>
-    <script src="lib/angular-slick/dist/slick.js"></script>
+    <script src="lib/flipLightBox.min.js"></script>
+    <script src="lib/imagesloaded.pkgd.min.js"></script>
+    <script src="lib/async.js"></script>
     <script src="lib/ng-cordova.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -37,7 +39,7 @@
     </ion-nav-view>
 
     <ion-footer-bar align-title="left" class="bar-assertive">
-        <button class="button">Start over</button>
+        <button class="button" ng-click="goToPage('/01-welcome')">Start over</button>
       <h1 class="title"></h1>
       <div class="buttons" ng-click="goToSettings()">
         <button class="button">Settings</button>

@@ -8,7 +8,7 @@
  
  */
 var APP_NAME = 'DAVINCIAPP';
-var APP_PASSWD = 'd@v1nc1!';
+var APP_PASSWD = '1234';
 var DROPBOX_FOLDER = 'Davinci_app';
 var DROPBOX_TOKEN = 'kbIy1EpakoMAAAAAAADFXTEV3VQ-b_Ud-W465zpB9uUDxDH0dLBODh-xqZh9lHqC';
 var EVENT_FOLDER;
@@ -16,7 +16,6 @@ var EVENT_FOLDER;
 angular.module(APP_NAME, [
     'ionic',
     'ngCordova',
-    'slick',
     'app.controllers',
     'app.services'
 ])
@@ -48,7 +47,7 @@ angular.module(APP_NAME, [
             EVENT_FOLDER = result.event_folder;
             $state.go('/01-welcome');
         });
-        
+
     });
     $rootScope.$on('$ionicView.afterEnter', function() {
         // Any thing you can think of
@@ -56,10 +55,41 @@ angular.module(APP_NAME, [
             $cordovaSplashscreen.hide();
         }
         console.log('```` View Updated.');
+        $('.slick-item-img').imagesLoaded()
+            .always(function(instance) {
+                console.log('all images loaded');
+            })
+            .done(function(instance) {
+                console.log('all images successfully loaded');
+                $('.slick').slick({
+                    centerMode: true,
+                    centerPadding: '120px',
+                    slidesToShow: 3
+                });
+                $('.image-lightbox').flipLightBox({
+                    type: 'image',
+                    when: {
+                        opened: function(flb) {
+                            $rootScope.imgToShare = $($($(flb.cb).html()).children('.flb-front')).children('img').attr('src');
+                            $('.btnShare').off('click').on('click', function() {
+                                // close modal
+                                $state.go('/04-share');
+                            });
+                        }
+                    }
+                });
+            })
+            .fail(function() {
+                console.log('all images loaded, at least one is broken');
+            })
+            .progress(function(instance, image) {
+                var result = image.isLoaded ? 'loaded' : 'broken';
+                console.log('image is ' + result + ' for ' + image.img.src);
+            });
     });
     // Go to page x
     $rootScope.goToPage = function(page) {
-      $state.go(page);
+        $state.go(page);
     };
     // Go to settings
     $rootScope.goToSettings = function() {
@@ -68,10 +98,10 @@ angular.module(APP_NAME, [
         Dialogs.prompt('You shall not pass...',
             function(result) {
                 if (result === APP_PASSWD) {
-                  // GO
-                  $state.go('/00-settings');
+                    // GO
+                    $state.go('/00-settings');
                 } else {
-                  // NOT GO
+                    // NOT GO
                 }
             });
     };

@@ -5,6 +5,7 @@ angular.module('app.controllers', [])
     $scope,
     $rootScope) {
     console.log('```` Rendering Settings');
+    $scope.token = DROPBOX_TOKEN;
 })
 
 /* 01-welcome */
@@ -18,26 +19,27 @@ angular.module('app.controllers', [])
 .controller('RegisterCtrl', function(
     $scope,
     $rootScope,
-    $state) {
+    $state,
+    Dropbox) {
     console.log('```` Rendering Register');
     $scope.register = function() {
         // form validation
         // https://scotch.io/tutorials/angularjs-form-validation
         // Dropbox append 
         // go to gallery
-        $state.go('/03-gallery');
+        Dropbox.getImages(function() {
+            $state.go('/03-gallery');
+        });
     };
 })
 
 /* 03-image-selection */
 .controller('GalleryCtrl', function(
     $scope,
-    $rootScope,
-    Dropbox) {
-    // Fetch img url
-    Dropbox.getImages(function(result) {
-        // console.log(result);
-    });
+    $rootScope) {
+    // imageLoaded
+    $('.flb-wrapper').show();
+    $('.flb-overlay').show();
     console.log('```` Rendering Gallery');
 })
 
@@ -45,6 +47,8 @@ angular.module('app.controllers', [])
 .controller('ShareCtrl', function(
     $scope,
     $rootScope) {
+    $('.flb-wrapper').hide();
+    $('.flb-overlay').hide();
     console.log('```` Rendering Share');
 })
 
