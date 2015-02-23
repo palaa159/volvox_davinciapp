@@ -38,8 +38,6 @@ angular.module('app.controllers', [])
     $scope,
     $rootScope) {
     // imageLoaded
-    $('.flb-wrapper').show();
-    $('.flb-overlay').show();
     console.log('```` Rendering Gallery');
 })
 
@@ -47,8 +45,6 @@ angular.module('app.controllers', [])
 .controller('ShareCtrl', function(
     $scope,
     $rootScope) {
-    $('.flb-wrapper').hide();
-    $('.flb-overlay').hide();
     console.log('```` Rendering Share');
 })
 

@@ -45,6 +45,7 @@ angular.module(APP_NAME, [
         console.log('```` App Ready');
         Dropbox.getSettings(function(result) {
             EVENT_FOLDER = result.event_folder;
+            $rootScope.welcome_msg = result.welcome_msg;
             $state.go('/01-welcome');
         });
 
@@ -64,17 +65,22 @@ angular.module(APP_NAME, [
                 $('.slick').slick({
                     centerMode: true,
                     centerPadding: '120px',
-                    slidesToShow: 3
+                    slidesToShow: 3,
+                    swipeToSlide: true
                 });
                 $('.image-lightbox').flipLightBox({
                     type: 'image',
                     when: {
                         opened: function(flb) {
                             $rootScope.imgToShare = $($($(flb.cb).html()).children('.flb-front')).children('img').attr('src');
-                            $('.btnShare').off('click').on('click', function() {
-                                // close modal
+                            $('.btnShare', flb.backEl).on('flbClick', {
+                                flb: flb
+                            }, close);
+
+                            function close(e) {
+                                e.data.flb.close();
                                 $state.go('/04-share');
-                            });
+                            }
                         }
                     }
                 });
