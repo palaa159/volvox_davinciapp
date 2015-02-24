@@ -3,8 +3,8 @@
 		<h1>Share</h1>
 		<div>
 			<img ng-src="{{imgToShare}}">
-			<button class="button">Share via Facebook</button>
-			<button class="button">Share via Instagram</button>
+			<button ng-click="facebookShare()" class="button">Share via Facebook</button>
+			<button ng-click="instagramShare()" class="button">Share via Instagram</button>
 		</div>
 	</ion-content>
 </ion-view>

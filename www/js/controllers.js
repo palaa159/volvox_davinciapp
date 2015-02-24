@@ -46,6 +46,17 @@ angular.module('app.controllers', [])
     $scope,
     $rootScope) {
     console.log('```` Rendering Share');
+    
+    //facebook login
+    $scope.facebookShare = function(  ){
+      console.log("facebookShare clicked!  Sharing image:"+$rootScope.imgToShare);
+    }
+    
+    
+    //instagram login
+    $scope.instagramShare = function(  ){
+      console.log("instagramShare clicked!  Sharing image:"+$rootScope.imgToShare);
+    }  
 })
 
 /* 05-thankyou */

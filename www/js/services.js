@@ -25,7 +25,7 @@ angular.module('app.services', [])
     };
 
     service.getImages = function(cb) {
-        $http.get('https://api.dropbox.com/1/metadata/auto/' + DROPBOX_FOLDER + '/' + EVENT_FOLDER + '/photobooth', {
+        $http.get('https://api.dropbox.com/1/metadata/auto/' + DROPBOX_FOLDER + '/' + EVENT_FOLDER + '/social_gallery', {
             headers: {
                 'Authorization': 'Bearer ' + DROPBOX_TOKEN
             }
