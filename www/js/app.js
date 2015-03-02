@@ -74,42 +74,7 @@ angular.module(APP_NAME, [
             $cordovaSplashscreen.hide();
         }
         console.log('```` View Updated.');
-        $('.slick-item-img').imagesLoaded()
-            .always(function(instance) {
-                console.log('all images loaded');
-            })
-            .done(function(instance) {
-                console.log('all images successfully loaded');
-                $('.slick').slick({
-                    centerMode: true,
-                    centerPadding: '120px',
-                    slidesToShow: 3,
-                    swipeToSlide: true
-                });
-                $('.image-lightbox').flipLightBox({
-                    type: 'image',
-                    when: {
-                        opened: function(flb) {
-                            $rootScope.imgToShare = $($($(flb.cb).html()).children('.flb-front')).children('img').attr('src');
-                            $('.btnShare', flb.backEl).on('flbClick', {
-                                flb: flb
-                            }, close);
-
-                            function close(e) {
-                                e.data.flb.close();
-                                $state.go('/04-share');
-                            }
-                        }
-                    }
-                });
-            })
-            .fail(function() {
-                console.log('all images loaded, at least one is broken');
-            })
-            .progress(function(instance, image) {
-                var result = image.isLoaded ? 'loaded' : 'broken';
-                console.log('image is ' + result + ' for ' + image.img.src);
-            });
+        
     });
     // Go to page x
     $rootScope.goToPage = function(page) {
@@ -191,8 +156,19 @@ angular.module(APP_NAME, [
 
 // Filters
 
-.filter('trusted', ['$sce', function ($sce) {
-    return function(url) {
-        return $sce.trustAsResourceUrl(url);
-    };
-}]);
+.filter('trusted', ['$sce',
+    function($sce) {
+        return function(url) {
+            return $sce.trustAsResourceUrl(url);
+        };
+    }
+]);
+
+Array.prototype.chunk = function(chunkSize) {
+    var array = this;
+    return [].concat.apply([],
+        array.map(function(elem, i) {
+            return i % chunkSize ? [] : [array.slice(i, i + chunkSize)];
+        })
+    );
+}

@@ -16,6 +16,7 @@ angular.module('app.controllers', [])
     $rootScope) {
     console.log('```` Rendering Welcome');
     $rootScope.backgroundPosX = 0;
+
 })
 
 /* 02-register */
@@ -29,26 +30,29 @@ angular.module('app.controllers', [])
     console.log('```` Rendering Register');
 
     $scope.user = {};
-
+    
+    Dropbox.getImages(function() {
+        $rootScope.gallery = $rootScope.gallery.chunk(6);
+        console.log($rootScope.gallery);
+    });
     $scope.register = function() {
         // form validation
-        Postmark.sendMail($scope.user.name, $scope.user.email, function() {
-            
-        });
+        // Postmark.sendMail($scope.user.name, $scope.user.email, function() {
+
+        // });
+        $ionicViewSwitcher.nextDirection('forward');
+        $state.go('/03-gallery');
         // https://scotch.io/tutorials/angularjs-form-validation
         // Dropbox append 
         // go to gallery
-        Dropbox.getImages(function() {
-            $ionicViewSwitcher.nextDirection('forward');
-            $state.go('/03-gallery');
-        });
     };
 })
 
 /* 03-image-selection */
 .controller('GalleryCtrl', function(
     $scope,
-    $rootScope) {
+    $rootScope,
+    Dropbox) {
     // imageLoaded
     console.log('```` Rendering Gallery');
 })
