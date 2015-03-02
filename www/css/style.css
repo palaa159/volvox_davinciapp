@@ -11,3 +11,103 @@
 	width: 100%;
 	height: 100%;
 }
+
+/*Override body bg*/
+body {
+	transition: 0.1s;
+	background-size: 110% !important;
+	background-repeat: no-repeat !important;
+}
+
+/*View Transparent*/
+.pane, .transparent-bg {
+	background-color: transparent !important;
+}
+
+/* Welcome Page */
+#welcome-container {
+	width: 100%;
+	text-align: center;
+}
+
+#welcome-container img {
+	margin-top: calc(50%);
+	width: 200px;
+	-webkit-animation: pulse 2s infinite;
+}
+
+/* Register page */
+#register-container {
+	width: 80%;
+	margin-top: 250px;
+}
+
+#register-container div {
+	margin-bottom: 3px;
+}
+
+/* container left */
+#register-container div .left {
+	width: 30%;
+	background: rgba(255,255,255,0.1);
+	text-align: right;
+	padding: 25px 15px;
+	font-size: 1.45em;
+}
+/* container right */
+#register-container div .right {
+	width: 70%;
+	background: rgba(255,255,255,0.2);
+	text-align: right;
+	padding: 18px 20px;
+}
+
+#register-container div .right input {
+	background: none !important;
+	color: #fff !important;
+	font-size: 1.45em !important;
+	text-transform: uppercase;
+}
+
+.register-disclaimer .right {
+	position: relative;
+	padding: 20px 0px 20px 20px !important;
+}
+
+#textarea-disclaimer {
+	height: 290px;
+	overflow-y: scroll;
+	text-align: left;
+	padding: 0px 0px;
+}
+
+#register-submit {
+	position: absolute;
+	bottom: -40px;
+	right: 0px;
+	padding: 10px 20px;
+}
+
+
+/* misc */
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+
+
+
+/* Animation */
+@-webkit-keyframes pulse{
+  0%{
+    -webkit-transform: scale(0.995);
+  }
+  50%{
+    -webkit-transform: scale(1.05);
+  }
+  100%{ 
+    -webkit-transform: scale(0.98);
+  }
+}

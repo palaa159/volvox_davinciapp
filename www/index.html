@@ -20,6 +20,7 @@
     <script src="lib/flipLightBox.min.js"></script>
     <script src="lib/imagesloaded.pkgd.min.js"></script>
     <script src="lib/async.js"></script>
+    <script src="lib/angular-retina.min.js"></script>
     <script src="lib/ng-cordova.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -32,9 +33,9 @@
 
   </head>
 
-  <body ng-app="DAVINCIAPP">
+  <body ng-app="DAVINCIAPP" style="background: url({{backgroundBg}}); background-position-x: {{backgroundPosX}}px;">
 
-    <ion-nav-view>
+    <ion-nav-view class="transparent-bg">
       <!-- Content of rendered page goes page -->
     </ion-nav-view>
 

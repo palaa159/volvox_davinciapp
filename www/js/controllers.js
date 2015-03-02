@@ -5,7 +5,9 @@ angular.module('app.controllers', [])
     $scope,
     $rootScope) {
     console.log('```` Rendering Settings');
-    $scope.token = DROPBOX_TOKEN;
+    $scope.dropbox_token = DROPBOX_TOKEN;
+    $scope.postmark_token = POSTMARK_TOKEN;
+    $scope.postmark_email = POSTMARK_EMAIL;
 })
 
 /* 01-welcome */
@@ -13,6 +15,7 @@ angular.module('app.controllers', [])
     $scope,
     $rootScope) {
     console.log('```` Rendering Welcome');
+    $rootScope.backgroundPosX = 0;
 })
 
 /* 02-register */
@@ -20,14 +23,23 @@ angular.module('app.controllers', [])
     $scope,
     $rootScope,
     $state,
-    Dropbox) {
+    $ionicViewSwitcher,
+    Dropbox,
+    Postmark) {
     console.log('```` Rendering Register');
+
+    $scope.user = {};
+
     $scope.register = function() {
         // form validation
+        Postmark.sendMail($scope.user.name, $scope.user.email, function() {
+            
+        });
         // https://scotch.io/tutorials/angularjs-form-validation
         // Dropbox append 
         // go to gallery
         Dropbox.getImages(function() {
+            $ionicViewSwitcher.nextDirection('forward');
             $state.go('/03-gallery');
         });
     };
@@ -46,17 +58,16 @@ angular.module('app.controllers', [])
     $scope,
     $rootScope) {
     console.log('```` Rendering Share');
-    
+
     //facebook login
-    $scope.facebookShare = function(  ){
-      console.log("facebookShare clicked!  Sharing image:"+$rootScope.imgToShare);
-    }
-    
-    
+    $scope.facebookShare = function() {
+        console.log("facebookShare clicked!  Sharing image:" + $rootScope.imgToShare);
+    };
+
     //instagram login
-    $scope.instagramShare = function(  ){
-      console.log("instagramShare clicked!  Sharing image:"+$rootScope.imgToShare);
-    }  
+    $scope.instagramShare = function() {
+        console.log("instagramShare clicked!  Sharing image:" + $rootScope.imgToShare);
+    };
 })
 
 /* 05-thankyou */

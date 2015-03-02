@@ -2,8 +2,12 @@
 	<ion-content class="padding" scroll="false">
 		<h1>Settings</h1>
 		<div>
-			<h4>Your current Dropbox Access Token is</h4>
-			<p>{{token}}</p>
+			<h4>Your Dropbox Access Token is</h4>
+			<p>{{dropbox_token}}</p>
+			<h4>Your Postmark Access Token is</h4>
+			<p>{{postmark_token}}</p>
+			<h4>Your Postmark Email is</h4>
+			<p>{{postmark_email}}</p>
 			<input type="text" placeholder="New Dropbox Token" ng-model>
 			<button class="button">Confirm</button>
 		</div>

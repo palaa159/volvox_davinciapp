@@ -20,7 +20,7 @@ angular.module('app.services', [])
                 'Authorization': 'Bearer ' + DROPBOX_TOKEN
             }
         }).then(function(result) {
-            cb(result.data);
+            cb(result);
         });
     };
 
@@ -69,7 +69,7 @@ angular.module('app.services', [])
                 'Authorization': 'Bearer ' + DROPBOX_TOKEN
             }
         }).then(function(result) {
-            cb(result.data.url);
+            if (cb) cb(result.data.url);
         });
     };
 
@@ -77,8 +77,26 @@ angular.module('app.services', [])
 })
 
 /* Postmarkapp */
-.factory('Postmark', function() {
+.factory('Postmark', function($http) {
     var service = {};
+
+    service.sendMail = function(name, email, cb) {
+        $http.post('https://api.postmarkapp.com/email', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-Postmark-Server-Token': POSTMARK_TOKEN
+            },
+            data: {
+                'From': POSTMARK_EMAIL,
+                'To': email,
+                'Subject': 'Thank you for registering Davinci',
+                'HtmlBody': ''
+            }
+        }).then(function(response) {
+            if (cb) cb(response);
+        });
+    };
 
     return service;
 })

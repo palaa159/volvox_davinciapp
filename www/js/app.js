@@ -10,12 +10,17 @@
 var APP_NAME = 'DAVINCIAPP';
 var APP_PASSWD = '1234';
 var DROPBOX_FOLDER = 'Davinci_app';
-var DROPBOX_TOKEN = 'kbIy1EpakoMAAAAAAADFXTEV3VQ-b_Ud-W465zpB9uUDxDH0dLBODh-xqZh9lHqC';
+var DROPBOX_TOKEN = localStorage['dropbox_token'] || 'kbIy1EpakoMAAAAAAADJ5r4h5VhfFIUhFQkfn3NfCm_66gDrKr3AhCCLlwADalJH';
+// Correct vvv
+var POSTMARK_EMAIL = localStorage['postmark_email'] || 'davinci@volvoxlabs.com';
+var POSTMARK_TOKEN = localStorage['postmark_token'] || 'e8d0a163-05ec-4feb-92a4-8acceb3d6a51';
 var EVENT_FOLDER;
+var EVENT_BG;
 
 angular.module(APP_NAME, [
     'ionic',
     'ngCordova',
+    'ngRetina',
     'app.controllers',
     'app.services'
 ])
@@ -43,10 +48,23 @@ angular.module(APP_NAME, [
             localStorage['uuid'] = $cordovaDevice.getUUID();
         }
         console.log('```` App Ready');
+        // GET ACCOUNT INFO
+        Dropbox.getAccountInfo(function(result) {
+            console.log(result);
+        });
         Dropbox.getSettings(function(result) {
-            EVENT_FOLDER = result.event_folder;
-            $rootScope.welcome_msg = result.welcome_msg;
-            $state.go('/01-welcome');
+            if (result.status == 200) {
+                EVENT_FOLDER = result.data.event_folder;
+                EVENT_BG = '/' + DROPBOX_FOLDER + '/' + EVENT_FOLDER + '/src_img/welcome_bg.jpg';
+                Dropbox.returnDirectLink(EVENT_BG, function(d) {
+                    $rootScope.backgroundBg = d;
+                    console.log($rootScope.backgroundBg); // √
+                    // $state.go('/01-welcome');
+                    $state.go('/02-register');
+                });
+            } else {
+                console.warn('CANNOT GET SETTINGS');
+            }
         });
 
     });
@@ -118,12 +136,13 @@ angular.module(APP_NAME, [
     $httpProvider,
     $cordovaInAppBrowserProvider,
     $stateProvider,
-    $urlRouterProvider) {
+    $urlRouterProvider,
+    $sceDelegateProvider) {
 
     /*
       Configurations
     */
-
+    $sceDelegateProvider.resourceUrlWhitelist(['**']);
     $ionicConfigProvider.views.maxCache(0);
     $httpProvider.defaults.cache = false;
     var options = {
@@ -168,4 +187,12 @@ angular.module(APP_NAME, [
             templateUrl: "views/05-thankyou.html",
             controller: 'ThankYouCtrl'
         });
-});
+})
+
+// Filters
+
+.filter('trusted', ['$sce', function ($sce) {
+    return function(url) {
+        return $sce.trustAsResourceUrl(url);
+    };
+}]);
