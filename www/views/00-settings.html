@@ -1,15 +1,32 @@
 <ion-view>
-	<ion-content class="padding" scroll="false">
-		<h1>Settings</h1>
-		<div>
-			<h4>Your Dropbox Access Token is</h4>
-			<p>{{dropbox_token}}</p>
-			<h4>Your Postmark Access Token is</h4>
-			<p>{{postmark_token}}</p>
-			<h4>Your Postmark Email is</h4>
-			<p>{{postmark_email}}</p>
-			<input type="text" placeholder="New Dropbox Token">
-			<button class="button">Confirm</button>
+	<ion-content class="padding" scroll="false" style="background: #000">
+		<div class="settings-container">
+			<h1 class="light">Settings</h1>
+			<div class="light">
+				<div class="setting-item">
+					<h3 class="light">Event Folder</h3>
+					<input type="text" ng-model="settings.event_folder">
+					<button class="button" ng-click="confirmEvent()">Confirm</button>
+				</div>
+				<div class="setting-item">
+					<h3 class="light">Dropbox Token</h3>
+					<input type="text" ng-model="settings.dropbox_token">
+					<button class="button" ng-click="confirmDropboxToken()">Confirm</button>
+				</div>
+				<div class="setting-item">
+					<h3 class="light">Postmark Token</h3>
+					<input type="text" ng-model="settings.postmark_token">
+					<button class="button" ng-click="confirmPostmarkToken()">Confirm</button>
+				</div>
+				<div class="setting-item">
+					<h3 class="light">Postmark Email</h3>
+					<input type="text" ng-model="settings.postmark_email">
+					<button class="button" ng-click="confirmPostmarkEmail()">Confirm</button>
+				</div>
+			</div>
+
+			<button class="button" ng-click="back()">Back</button>
+
 		</div>
 	</ion-content>
 </ion-view>

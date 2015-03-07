@@ -17,6 +17,7 @@ var POSTMARK_TOKEN = localStorage['postmark_token'] || 'e8d0a163-05ec-4feb-92a4-
 
 var EVENT_NAME;
 var EVENT_FOLDER = localStorage['event_folder'] || 'test_event';
+
 var EVENT_BG;
 var EVENT_DISCLAIMER;
 
@@ -53,12 +54,19 @@ angular.module(APP_NAME, [
             localStorage['uuid'] = $cordovaDevice.getUUID();
         }
         console.log('```` App Ready');
+        // SET GLOBAL
+        $rootScope.settings = {};
+        $rootScope.settings.event_folder = EVENT_FOLDER;
+        $rootScope.settings.dropbox_token = DROPBOX_TOKEN;
+        $rootScope.settings.postmark_email = POSTMARK_EMAIL;
+        $rootScope.settings.postmark_token = POSTMARK_TOKEN;
         // GET ACCOUNT INFO
         Dropbox.getAccountInfo(function(result) {
             console.log(result);
         });
         Dropbox.getSettings(function(res) {
             console.log(res);
+
             EVENT_NAME = res.event_name;
             EVENT_FOLDER = res.event_folder;
             EVENT_BG = '/' + DROPBOX_FOLDER + '/' + getEventFolder() + '/src_img/welcome_bg.jpg';
@@ -98,7 +106,28 @@ angular.module(APP_NAME, [
             when: {
                 opened: function(flb) {
                     $rootScope.imgToShare = $($($(flb.cb).html()).children('.flb-front')).children('img').attr('src');
-                    $('.btnShare', flb.backEl).on('flbClick', {
+                    $rootScope.msgToShare = "#hey #whatsup";
+                    $('#shareFacebook').on('flbClick', function() {
+                        $rootScope.socialToShare = 'Facebook';
+                        console.log('Share Facebook');
+                    });
+
+                    $('#shareInstagram').on('flbClick', function() {
+                        $rootScope.socialToShare = 'Instagram';
+                        console.log('Share Instagram');
+                    });
+
+                    $('#shareMail').on('flbClick', function() {
+                        $rootScope.socialToShare = 'Email';
+                        console.log('Share Mail');
+                    });
+
+                    $('#sharePrint').on('flbClick', function() {
+                        $rootScope.socialToShare = 'Print';
+                        console.log('Share Print');
+                    });
+
+                    $('.share-icon', flb.backEl).on('flbClick', {
                         flb: flb
                     }, close);
 

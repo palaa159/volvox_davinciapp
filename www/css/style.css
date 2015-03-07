@@ -5,7 +5,7 @@
     font-family: 'tabiamedium' !important;
 }
 body {
-    transition: 0.1s;
+    transition: 0.75s;
     background-size: cover 110% !important;
     background-repeat: no-repeat !important;
 }
@@ -14,6 +14,33 @@ body {
 .pane, .transparent-bg {
     background-color: transparent !important;
 }
+
+/* Settings Page */
+
+.settings-container {
+    padding: 20px;
+}
+
+.btnSettings {
+    position: absolute;
+    bottom: 15%;
+    background: #fff;
+    padding: 20px;
+    opacity: 0;
+}
+
+.setting-item {
+    margin: 20px 0px;
+}
+
+.setting-item input {
+    width: 70%;
+    font-size: 1.5em;
+    height: 2.25em;
+    display: inline;
+    padding-left: 10px;
+}
+
 /* Welcome Page */
 
 #welcome-container {
@@ -151,10 +178,32 @@ body {
     text-align: center;
     margin: 0 auto;
     margin-top: 100px;
-    width: 70%;
+    width: 85%;
 }
+
+#share-container .left {
+    padding: 10px;
+}
+
+#share-container .right {
+    text-align: left;
+    padding: 10px;
+}
+
+#share-container .right textarea {
+    height: 200px;
+    font-size: 2.5em;
+    line-height: 1.2em;
+    background: transparent;
+    color: yellow;
+    margin-bottom: 20px;
+}
+
+.img-to-share {
+    width: 450px;
+}
+
 .btnConfirmShare {
-    margin-top: 50px;
 }
 /* Thankyou page */
 
@@ -165,11 +214,24 @@ body {
     font-size: 3em;
     background: rgba(255, 255, 255, 0.1);
     text-align: center;
-    margin: 42% auto;
+    margin: 0 auto;
+    margin-top: 20%;
     height: 350px;
     border-radius: 50%;
     padding-top: 170px;
 }
+
+.startOver {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    right: 0px;
+    top: 100%;
+    font-size: 2.5em;
+    padding: 18px 40px;
+    color: yellow;
+
+}
+
 /* misc */
 
 .left {
