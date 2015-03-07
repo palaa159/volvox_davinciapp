@@ -1,10 +1,12 @@
 <ion-view>
 	<ion-content class="padding" scroll="false">
-		<h1>Share</h1>
-		<div>
+		<div id="share-container">
 			<img ng-src="{{imgToShare}}">
-			<button ng-click="facebookShare()" class="button">Share via Facebook</button>
-			<button ng-click="instagramShare()" class="button">Share via Instagram</button>
+			<h1 class="light">
+				Share via Facebook
+			</h1>
+			<input type="text">
+			<button class="button btnConfirmShare" ng-click="share()">SHARE</button>
 		</div>
 	</ion-content>
 </ion-view>

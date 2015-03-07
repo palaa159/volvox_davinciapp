@@ -1,21 +1,13 @@
 <ion-view>
-    <!-- Slick 
-		<div class="slick">
-			<div class="slick-item" ng-repeat="item in gallery">
-				<a class="image-lightbox" ng-href="{{item}}">
-					<img class="slick-item-img" ng-src="{{item}}">
-				</a>
-			</div>
-		</div>
-		End of Slick -->
-
     <ion-slide-box on-slide-changed="slideHasChanged($index)">
         <ion-slide ng-repeat="sixImages in gallery" class="slide-by-six">
             <div class="slide-box">
-                <a ng-cloak ng-repeat="image in sixImages track by $index" ng-href="{{image}}">
-                    <img class="gallery-image" ng-src="{{image}}">
-                </a>
-                <div class="clearfix"></div>
+                <div>
+                    <a class="image-lightbox" ng-cloak ng-repeat="image in sixImages track by $index" ng-href="{{image}}">
+                        <img class="gallery-image" ng-src="{{image}}">
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </ion-slide>
     </ion-slide-box>

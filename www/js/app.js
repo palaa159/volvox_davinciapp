@@ -1,11 +1,11 @@
-/* 
+/*
  * Davinci App
  * Cordova plugins used:
  * – Device
  * – Splashscreen
  * – Statusbar
  * – Inappbrowser
- 
+
  */
 var APP_NAME = 'DAVINCIAPP';
 var APP_PASSWD = '1234';
@@ -14,8 +14,11 @@ var DROPBOX_TOKEN = localStorage['dropbox_token'] || 'kbIy1EpakoMAAAAAAADJ5r4h5V
 // Correct vvv
 var POSTMARK_EMAIL = localStorage['postmark_email'] || 'davinci@volvoxlabs.com';
 var POSTMARK_TOKEN = localStorage['postmark_token'] || 'e8d0a163-05ec-4feb-92a4-8acceb3d6a51';
-var EVENT_FOLDER;
+
+var EVENT_NAME;
+var EVENT_FOLDER = localStorage['event_folder'] || 'test_event';
 var EVENT_BG;
+var EVENT_DISCLAIMER;
 
 angular.module(APP_NAME, [
     'ionic',
@@ -29,10 +32,12 @@ angular.module(APP_NAME, [
     $ionicPlatform,
     $rootScope,
     $state,
+    $ionicViewSwitcher,
     Dialogs,
     Dropbox,
     $cordovaDevice,
     $cordovaSplashscreen,
+    $cordovaProgress,
     $cordovaStatusbar) {
 
     $ionicPlatform.ready(function() {
@@ -52,32 +57,65 @@ angular.module(APP_NAME, [
         Dropbox.getAccountInfo(function(result) {
             console.log(result);
         });
-        Dropbox.getSettings(function(result) {
-            if (result.status == 200) {
-                EVENT_FOLDER = result.data.event_folder;
-                EVENT_BG = '/' + DROPBOX_FOLDER + '/' + EVENT_FOLDER + '/src_img/welcome_bg.jpg';
-                Dropbox.returnDirectLink(EVENT_BG, function(d) {
-                    $rootScope.backgroundBg = d;
-                    console.log($rootScope.backgroundBg); // √
-                    // $state.go('/01-welcome');
-                    $state.go('/02-register');
-                });
-            } else {
-                console.warn('CANNOT GET SETTINGS');
+        Dropbox.getSettings(function(res) {
+            console.log(res);
+            EVENT_NAME = res.event_name;
+            EVENT_FOLDER = res.event_folder;
+            EVENT_BG = '/' + DROPBOX_FOLDER + '/' + getEventFolder() + '/src_img/welcome_bg.jpg';
+
+            Dropbox.returnDirectLink(EVENT_BG, function(d) {
+                $rootScope.backgroundBg = d;
+                console.log($rootScope.backgroundBg); // √
+                $state.go('/01-welcome');
+                // $state.go('/02-register');
+            });
+        }, function(err) {
+            console.log(err);
+            if (err == null) {
+                err = {};
+                err.error = 'No internet connection.';
             }
+            /*
+                Cannot get settings file
+                – EVENT_FOLDER does not exist
+                – or, Internet connection lost
+            */
+            Dialogs.alert('settings.json | ' + err.error, 'OK', function() {
+                $state.go('/00-settings');
+            });
         });
 
     });
+
     $rootScope.$on('$ionicView.afterEnter', function() {
         // Any thing you can think of
         if (window.cordova) {
+            $cordovaProgress.hide();
             $cordovaSplashscreen.hide();
         }
+        $('.image-lightbox').flipLightBox({
+            type: 'image',
+            when: {
+                opened: function(flb) {
+                    $rootScope.imgToShare = $($($(flb.cb).html()).children('.flb-front')).children('img').attr('src');
+                    $('.btnShare', flb.backEl).on('flbClick', {
+                        flb: flb
+                    }, close);
+
+                    function close(e) {
+                        e.data.flb.close();
+                        $state.go('/04-share');
+                    }
+                }
+            }
+        });
         console.log('```` View Updated.');
-        
+
     });
     // Go to page x
     $rootScope.goToPage = function(page) {
+        // Fade out
+        $ionicViewSwitcher.nextDirection('forward');
         $state.go(page);
     };
     // Go to settings
@@ -171,4 +209,16 @@ Array.prototype.chunk = function(chunkSize) {
             return i % chunkSize ? [] : [array.slice(i, i + chunkSize)];
         })
     );
+};
+
+function getEventName() {
+    return EVENT_NAME;
+}
+
+function getEventFolder() {
+    return EVENT_FOLDER;
+}
+
+function getEventDisclaimer() {
+    return EVENT_DISCLAIMER;
 }

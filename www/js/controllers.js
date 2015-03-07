@@ -25,25 +25,35 @@ angular.module('app.controllers', [])
     $rootScope,
     $state,
     $ionicViewSwitcher,
+    $cordovaProgress,
     Dropbox,
     Postmark) {
     console.log('```` Rendering Register');
 
     $scope.user = {};
-    
-    Dropbox.getImages(function() {
-        $rootScope.gallery = $rootScope.gallery.chunk(6);
-        console.log($rootScope.gallery);
-    });
+
+    $scope.cancel = function() {
+        $ionicViewSwitcher.nextDirection('back');
+        $state.go('/01-welcome');
+    };
+
     $scope.register = function() {
         // form validation
+
+        // Spinner
+        if (window.cordova) $cordovaProgress.showSimpleWithLabelDetail(true, "Registering...", "You will receive an email from us shortly.");
+
         // Postmark.sendMail($scope.user.name, $scope.user.email, function() {
 
         // });
-        $ionicViewSwitcher.nextDirection('forward');
-        $state.go('/03-gallery');
+        Dropbox.getImages(function() {
+            $rootScope.gallery = $rootScope.gallery.chunk(6);
+            console.log($rootScope.gallery);
+            $ionicViewSwitcher.nextDirection('forward');
+            $state.go('/03-gallery');
+        });
         // https://scotch.io/tutorials/angularjs-form-validation
-        // Dropbox append 
+        // Dropbox append
         // go to gallery
     };
 })
@@ -55,6 +65,7 @@ angular.module('app.controllers', [])
     Dropbox) {
     // imageLoaded
     console.log('```` Rendering Gallery');
+
 })
 
 /* 04-share */
@@ -63,14 +74,8 @@ angular.module('app.controllers', [])
     $rootScope) {
     console.log('```` Rendering Share');
 
-    //facebook login
-    $scope.facebookShare = function() {
-        console.log("facebookShare clicked!  Sharing image:" + $rootScope.imgToShare);
-    };
-
-    //instagram login
-    $scope.instagramShare = function() {
-        console.log("instagramShare clicked!  Sharing image:" + $rootScope.imgToShare);
+    $scope.share = function() {
+        $rootScope.goToPage('/05-thankyou');
     };
 })
 

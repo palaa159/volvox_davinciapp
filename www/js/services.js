@@ -14,18 +14,23 @@ angular.module('app.services', [])
         });
     };
 
-    service.getSettings = function(cb) {
-        $http.get('https://api-content.dropbox.com/1/files/auto/' + DROPBOX_FOLDER + '/settings.json', {
+    service.getSettings = function(success, fail) {
+        console.log('````` Get settings.json');
+        $http.get('https://api-content.dropbox.com/1/files/auto/' + DROPBOX_FOLDER + '/' + getEventFolder() + '/settings.json', {
             headers: {
                 'Authorization': 'Bearer ' + DROPBOX_TOKEN
             }
-        }).then(function(result) {
-            cb(result);
+        })
+        .success(function(res) {
+            success(res);
+        })
+        .error(function(err) {
+            fail(err);
         });
     };
 
     service.getImages = function(cb) {
-        $http.get('https://api.dropbox.com/1/metadata/auto/' + DROPBOX_FOLDER + '/' + EVENT_FOLDER + '/social_gallery', {
+        $http.get('https://api.dropbox.com/1/metadata/auto/' + DROPBOX_FOLDER + '/' + getEventFolder() + '/social_gallery', {
             headers: {
                 'Authorization': 'Bearer ' + DROPBOX_TOKEN
             }
@@ -102,9 +107,14 @@ angular.module('app.services', [])
 })
 
 /* Dialogs */
-.factory('Dialogs', function($ionicPopup) {
+.factory('Dialogs', function($ionicPopup, $cordovaDialogs) {
     var service = {};
 
+    service.alert = function(message, buttonName, cb) {
+        $cordovaDialogs.alert(message, getEventName(), buttonName).then(function() {
+            if (cb) cb();
+        });
+    };
     service.prompt = function(msg, cb) {
         $ionicPopup.prompt({
             title: 'Password Check',

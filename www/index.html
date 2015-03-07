@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/slick-carousel/slick/slick.css">
+    <link href="css/font/stylesheet.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -31,12 +32,12 @@
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
 
-  </head>
+</head>
 
-  <body ng-app="DAVINCIAPP" style="background: url({{backgroundBg}}); background-position-x: {{backgroundPosX}}px;">
+<body ng-app="DAVINCIAPP" style="background: url({{backgroundBg}}) fixed; background-position: {{backgroundPosX}}px 0px !important;">
 
     <ion-nav-view class="transparent-bg">
-      <!-- Content of rendered page goes page -->
+        <!-- Content of rendered page goes page -->
     </ion-nav-view>
 
     <!--
@@ -49,6 +50,6 @@
     </ion-footer-bar>
   -->
 
-  </body>
+</body>
 
 </html>
