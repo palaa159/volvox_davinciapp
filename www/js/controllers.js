@@ -69,7 +69,6 @@ angular.module('app.controllers', [])
     $rootScope) {
     console.log('```` Rendering Welcome');
     $rootScope.backgroundPosX = 0;
-
 })
 
 /* 02-register */
@@ -120,6 +119,7 @@ angular.module('app.controllers', [])
     // imageLoaded
     console.log('```` Rendering Gallery');
     $rootScope.backgroundPosX = -80;
+
 })
 
 /* 04-share */
