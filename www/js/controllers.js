@@ -16,7 +16,6 @@ angular.module('app.controllers', [])
     $rootScope) {
     console.log('```` Rendering Welcome');
     $rootScope.backgroundPosX = 0;
-
 })
 
 /* 02-register */
@@ -29,7 +28,7 @@ angular.module('app.controllers', [])
     Dropbox,
     Postmark) {
     console.log('```` Rendering Register');
-
+    $rootScope.backgroundPosX = -20;
     $scope.user = {};
 
     $scope.cancel = function() {
@@ -65,6 +64,11 @@ angular.module('app.controllers', [])
     Dropbox) {
     // imageLoaded
     console.log('```` Rendering Gallery');
+    $rootScope.backgroundPosX = -40;
+
+    $scope.shareFacebook = function() {
+        console.log('Selected');
+    };
 
 })
 

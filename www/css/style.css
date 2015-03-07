@@ -5,7 +5,7 @@
     font-family: 'tabiamedium' !important;
 }
 body {
-    transition: 0.1s;
+    transition: 0.75s;
     background-size: cover 110% !important;
     background-repeat: no-repeat !important;
 }
@@ -142,9 +142,6 @@ body {
     /*opacity: 1;*/
 }
 
-.btnShare {
-    margin: 0px 20px;
-}
 /* Share page */
 
 #share-container {
