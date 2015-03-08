@@ -3,7 +3,7 @@
         <ion-slide ng-repeat="sixImages in gallery" class="slide-by-six">
             <div class="slide-box">
                 <div>
-                    <a class="image-lightbox" ng-cloak ng-repeat="image in sixImages track by $index" ng-href="{{image}}">
+                    <a class="image-lightbox" ng-cloak ng-repeat="image in sixImages track by $index" ng-href="{{image}}" style="text-decoration: none;">
                         <img class="gallery-image" ng-src="{{image}}">
                     </a>
                     <div class="clearfix"></div>
