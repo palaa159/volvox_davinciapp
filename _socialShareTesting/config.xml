@@ -13,10 +13,26 @@
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="BackupWebStorage" value="none"/>
+
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+
   <feature name="InAppBrowser">
     <param name="ios-package" value="CDVInAppBrowser" />
-</feature>
+  </feature>
+
+  <!-- No idea if this is needed or not  -->
+  <feature name="Printer">
+    <param name="ios-package" value="APPPrinter" />
+  </feature>
+
+  <!-- No idea if this is needed or not  -->
+  <feature name="Device">
+    <param name="ios-package" value="CDVDevice" />
+  </feature>
+
+  <!-- FROM: https://github.com/katzer/cordova-plugin-printer -->
+ <gap:plugin name="de.appplant.cordova.plugin.printer" version="0.6.0" />
+
 </widget>
