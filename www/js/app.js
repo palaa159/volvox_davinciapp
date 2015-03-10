@@ -12,8 +12,8 @@ var APP_PASSWD = '1234';
 var DROPBOX_FOLDER = 'Davinci_app';
 var DROPBOX_TOKEN = localStorage['dropbox_token'] || 'kbIy1EpakoMAAAAAAADJ5r4h5VhfFIUhFQkfn3NfCm_66gDrKr3AhCCLlwADalJH';
 // Correct vvv
-var POSTMARK_EMAIL = localStorage['postmark_email'] || 'davinci@volvoxlabs.com';
-var POSTMARK_TOKEN = localStorage['postmark_token'] || 'e8d0a163-05ec-4feb-92a4-8acceb3d6a51';
+var MANDRILL_EMAIL = localStorage['mandrill_email'] || 'davinci@volvoxlabs.com';
+var MANDRILL_TOKEN = localStorage['mandrill_token'] || 'gRxJVxhYFO9JyWmDsvq9ow';
 
 var EVENT_NAME;
 var EVENT_FOLDER = localStorage['event_folder'] || 'test_event';
@@ -44,7 +44,7 @@ angular.module(APP_NAME, [
 
 	$ionicPlatform.ready(function() {
 		if (window.cordova && window.cordova.plugins.Keyboard) {
-			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			// cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 		}
 		if (window.StatusBar) {
 			StatusBar.styleDefault();
@@ -58,8 +58,8 @@ angular.module(APP_NAME, [
 		$rootScope.settings = {};
 		$rootScope.settings.event_folder = EVENT_FOLDER;
 		$rootScope.settings.dropbox_token = DROPBOX_TOKEN;
-		$rootScope.settings.postmark_email = POSTMARK_EMAIL;
-		$rootScope.settings.postmark_token = POSTMARK_TOKEN;
+		$rootScope.settings.mandrill_email = MANDRILL_EMAIL;
+		$rootScope.settings.mandrill_token = MANDRILL_TOKEN;
 		// GET ACCOUNT INFO
 		Dropbox.getAccountInfo(function(result) {
 			console.log(result);
@@ -78,7 +78,7 @@ angular.module(APP_NAME, [
 				if(window.cordova) {
 					$timeout(function() {
 						$cordovaSplashscreen.hide();
-					}, 4000);
+					}, 1000);
 
 				}
 

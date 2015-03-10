@@ -81,10 +81,29 @@ angular.module('app.services', [])
 	return service;
 })
 
-/* Postmarkapp */
-.factory('Postmark', function() {
+/* Mandrillapp */
+.factory('Mandrill', function() {
 	var service = {};
 	service.sendMail = function(name, email, cb) {
+		var m = new mandrill.Mandrill(MANDRILL_TOKEN);
+		var params = {
+			"message": {
+				"from_email": MANDRILL_EMAIL,
+				"to": [{
+					"email": email
+				}],
+				"subject": "Sending a text email from the Mandrill API",
+				"text": "I'm learning the Mandrill API at Codecademy."
+			}
+		};
+
+		m.messages.send(params, function(res) {
+			console.log(res);
+			if (cb) cb();
+		}, function(err) {
+			console.log(err);
+		});
+
 
 	};
 

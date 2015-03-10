@@ -20,14 +20,14 @@ angular.module('app.controllers', [])
         DROPBOX_TOKEN = localStorage['dropbox_token'];
     };
 
-    $scope.confirmPostmarkEmail = function() {
-        localStorage['postmark_email'] = $rootScope.settings.postmark_email;
-        POSTMARK_EMAIL = localStorage['postmark_email'];
+    $scope.confirmMandrillEmail = function() {
+        localStorage['mandrill_email'] = $rootScope.settings.mandrill_email;
+        POSTMARK_EMAIL = localStorage['mandrill_email'];
     };
 
-    $scope.confirmPostmarkToken = function() {
-        localStorage['postmark_token'] = $rootScope.settings.postmark_token;
-        POSTMARK_TOKEN = localStorage['postmark_token'];
+    $scope.confirmMandrillToken = function() {
+        localStorage['mandrill_token'] = $rootScope.settings.mandrill_token;
+        POSTMARK_TOKEN = localStorage['mandrill_token'];
     };
 
     $scope.back = function() {
@@ -79,7 +79,7 @@ angular.module('app.controllers', [])
     $ionicViewSwitcher,
     $cordovaProgress,
     Dropbox,
-    Postmark) {
+    Mandrill) {
     console.log('```` Rendering Register');
     $rootScope.backgroundPosX = -40;
     $scope.user = {};
@@ -95,15 +95,13 @@ angular.module('app.controllers', [])
         // Spinner
         if (window.cordova) $cordovaProgress.showSimpleWithLabelDetail(true, "Registering...", "You will receive an email from us shortly.");
 
-        Postmark.sendMail($scope.user.name, $scope.user.email, function() {
-
-        });
-
-        Dropbox.getImages(function() {
-            $rootScope.gallery = $rootScope.gallery.chunk(6);
-            console.log($rootScope.gallery);
-            $ionicViewSwitcher.nextDirection('forward');
-            $state.go('/03-gallery');
+        Mandrill.sendMail($scope.user.name, $scope.user.email, function() {
+            Dropbox.getImages(function() {
+                $rootScope.gallery = $rootScope.gallery.chunk(6);
+                console.log($rootScope.gallery);
+                $ionicViewSwitcher.nextDirection('forward');
+                $state.go('/03-gallery');
+            });
         });
         // https://scotch.io/tutorials/angularjs-form-validation
         // Dropbox append
