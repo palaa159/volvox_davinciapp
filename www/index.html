@@ -38,19 +38,16 @@
 
 <body ng-app="DAVINCIAPP" style="background: url({{backgroundBg}}) fixed;">
 
+    <ion-header-bar align-title="left" class="bar-clear">
+      <div class="buttons">
+        <button class="button" style="background: transparent; border: none;" ng-click="startOver()">Start Over</button>
+      </div>
+    </ion-header-bar>
+
     <ion-nav-view class="transparent-bg">
         <!-- Content of rendered page goes page -->
     </ion-nav-view>
 
-    <!--
-    <ion-footer-bar align-title="left" class="bar-assertive">
-        <button class="button" ng-click="goToPage('/01-welcome')">Start over</button>
-      <h1 class="title"></h1>
-      <div class="buttons" ng-click="goToSettings()">
-        <button class="button">Settings</button>
-      </div>
-    </ion-footer-bar>
-  -->
 
 </body>
 

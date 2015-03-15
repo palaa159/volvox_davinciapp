@@ -9,9 +9,13 @@
 				<h1 class="light">
 					Share via {{socialToShare}}
 				</h1>
-				<textarea maxlength="50" ng-model="msgToShare"></textarea>
+				<textarea maxlength="70" ng-model="msgToShare"></textarea>
 				<button class="button btnBack" ng-click="back()">BACK</button>
-				<button class="button btnConfirmShare" ng-click="share()">SHARE</button>
+				<!--  -->
+				<button ng-if="socialToShare == 'Facebook'" class="button btnConfirmShare" ng-click="postOnFb()">POST</button>
+				<button ng-if="socialToShare == 'Print'" class="button btnConfirmShare" ng-click="print()">PRINT</button>
+				<button ng-if="socialToShare == 'Email'" class="button btnConfirmShare" ng-click="email()">EMAIL</button>
+				<!--  -->
 			</div>
 
 		</div>

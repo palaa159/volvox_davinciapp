@@ -51,10 +51,10 @@ angular.module('app.controllers', [])
                 err.error = 'No internet connection.';
             }
             /*
-                Cannot get settings file
-                – EVENT_FOLDER does not exist
-                – or, Internet connection lost
-            */
+			    Cannot get settings file
+			    – EVENT_FOLDER does not exist
+			    – or, Internet connection lost
+			*/
             Dialogs.alert('settings.json | ' + err.error, 'OK', function() {
                 $state.go('/00-settings');
             });
@@ -77,8 +77,8 @@ angular.module('app.controllers', [])
     $rootScope,
     $state,
     $ionicViewSwitcher,
-    $cordovaProgress,
     Dropbox,
+    $ionicLoading,
     Mandrill) {
     console.log('```` Rendering Register');
     $rootScope.backgroundPosX = -40;
@@ -93,9 +93,20 @@ angular.module('app.controllers', [])
         // form validation
 
         // Spinner
-        if (window.cordova) $cordovaProgress.showSimpleWithLabelDetail(true, "Registering...", "You will receive an email from us shortly.");
+        $ionicLoading.show({
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
 
         Mandrill.sendMail($scope.user.name, $scope.user.email, function() {
+            // Save a user
+            // find a file: users_iPadID.json
+            Dropbox.appendUser($scope.user.name, $scope.user.email, function() {
+                console.log('User saved.');
+            });
+            // Load images
             Dropbox.getImages(function() {
                 $rootScope.gallery = $rootScope.gallery.chunk(6);
                 console.log($rootScope.gallery);
@@ -134,8 +145,34 @@ angular.module('app.controllers', [])
         $state.go('/03-gallery');
     };
 
-    $scope.share = function() {
-        $rootScope.goToPage('/05-thankyou');
+    $scope.postOnFb = function() {
+        $http.get('https://graph.facebook.com/v2.2/me?access_token=' + $rootScope.fb_token.toString())
+            .success(function(data, status, headers, config) {
+                console.log("get headers: " + JSON.stringify(headers));
+                console.log("get user data: " + JSON.stringify(data));
+
+                var user_id = data.id;
+                var msgToPost = $rootScope.msgToShare;
+                var photoToPost = "http://itchmo.com/wp-content/uploads/2007/06/p48118p.jpg";
+
+                $http({
+                    method: "POST",
+                    url: 'https://graph.facebook.com/v2.2/' + uid + '/photos?access_token=' + $rootScope.fb_token + '&url=' + photoUrl + '&message=' + photoMessage
+                }).
+                success(function(data) {
+                    // alert("POST SUCCESSFUL"); 
+                    console.log("success on POST: " + JSON.stringify(data));
+                    $rootScope.goToPage('/05-thankyou');
+                }).
+                error(function(data) {
+                    console.log("error on POST: " + JSON.stringify(data));
+                });
+
+            }).
+        error(function(data, status, headers, config) {
+            console.log("error data: " + JSON.stringify(data));
+            console.log("error status: " + status);
+        });
     };
 })
 
@@ -146,9 +183,4 @@ angular.module('app.controllers', [])
     $state) {
     console.log('```` Rendering ThankYou');
     $rootScope.backgroundPosX = -160;
-
-    $scope.startOver = function() {
-        // Restart
-        $state.go('/01-welcome');
-    };
 });

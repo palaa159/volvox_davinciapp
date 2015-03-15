@@ -253,3 +253,7 @@ body {
 [nav-view="leaving"] {
     opacity: 0 !important;
 }
+
+[ng-disabled] {
+    /*color: #7B7B7B;*/
+}
